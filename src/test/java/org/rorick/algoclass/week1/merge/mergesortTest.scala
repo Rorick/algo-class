@@ -23,4 +23,9 @@ class mergesortTest extends FunSuite {
   test("should return sorted list when two element unsorted list") {
     assert(sort(List(5, 2)) === List(2, 5))
   }
+
+  test("should return new list when two element unsorted list") {
+    val list = List(5, 2)
+    assert(!(sort(list) eq list))
+  }
 }
