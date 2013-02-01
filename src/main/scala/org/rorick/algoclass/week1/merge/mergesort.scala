@@ -5,13 +5,13 @@ package org.rorick.algoclass.week1.merge
  */
 object mergesort {
 
-  def merge(xs: Array[Int], ys: Array[Int], xfrom: Int, xuntil: Int, yfrom: Int, yuntil: Int): Array[Int] = {
-    if (xs(xfrom) < ys(yfrom)) xs else {
-      val t = ys(yfrom)
-      ys(yfrom) = xs(xfrom)
-      xs(xfrom) = t
-      xs
+  def merge(xs: Array[Int], from: Int, m: Int, until: Int): Array[Int] = {
+    if (xs(from) > xs(m)) {
+      val t = xs(from)
+      xs(from) = xs(m)
+      xs(m) = t
     }
+    xs
   }
 
   private def sortImpl(xs: Array[Int], from: Int, until: Int): Array[Int] = {
@@ -24,7 +24,8 @@ object mergesort {
       xs
     } else {
       val n = N / 2
-      merge(sortImpl(xs, 0, n), sortImpl(xs, n, N), 0, n, n, N)
+      val partiallySorted = sortImpl(xs, 0, n)
+      merge(partiallySorted, 0, n, N)
     }
   }
 
