@@ -6,7 +6,12 @@ package org.rorick.algoclass.week1.merge
 object mergesort {
 
   def merge(xs: Array[Int], ys: Array[Int], xfrom: Int, xuntil: Int, yfrom: Int, yuntil: Int): Array[Int] = {
-    if (xs(xfrom) < ys(yfrom)) Array(xs(xfrom), ys(yfrom)) else Array(ys(yfrom), xs(xfrom))
+    if (xs(xfrom) < ys(yfrom)) xs else {
+      val t = ys(yfrom)
+      ys(yfrom) = xs(xfrom)
+      xs(xfrom) = t
+      xs
+    }
   }
 
   private def sortImpl(xs: Array[Int], from: Int, until: Int): Array[Int] = {
