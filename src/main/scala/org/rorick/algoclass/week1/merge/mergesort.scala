@@ -20,9 +20,10 @@ object mergesort {
     assert(N >= 0)
 
     if (N > 1) {
-      val n = N / 2
-      sortImpl(xs, 0, n)
-      merge(xs, 0, n, N)
+      val m = N / 2
+      sortImpl(xs, 0, m)
+      sortImpl(xs, m, N)
+      merge(xs, 0, m, N)
     }
   }
 
