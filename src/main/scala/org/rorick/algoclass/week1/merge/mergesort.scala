@@ -5,32 +5,31 @@ package org.rorick.algoclass.week1.merge
  */
 object mergesort {
 
-  def merge(xs: Array[Int], from: Int, m: Int, until: Int): Array[Int] = {
+  def merge(xs: Array[Int], from: Int, m: Int, until: Int) {
     if (xs(from) > xs(m)) {
       val t = xs(from)
       xs(from) = xs(m)
       xs(m) = t
     }
-    xs
   }
 
-  private def sortImpl(xs: Array[Int], from: Int, until: Int): Array[Int] = {
+  private def sortImpl(xs: Array[Int], from: Int, until: Int) {
     require(from <= until)
 
     val N: Int = until - from
     assert(N >= 0)
 
-    if (N <= 1) {
-      xs
-    } else {
+    if (N > 1) {
       val n = N / 2
-      val partiallySorted = sortImpl(xs, 0, n)
-      merge(partiallySorted, 0, n, N)
+      sortImpl(xs, 0, n)
+      merge(xs, 0, n, N)
     }
   }
 
 
   def sort(xs: List[Int]): List[Int] = {
-    List(sortImpl(xs.toArray, 0, xs.size): _*)
+    val xsArray = xs.toArray
+    sortImpl(xsArray, 0, xs.size)
+    List(xsArray: _*)
   }
 }
