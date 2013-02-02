@@ -6,10 +6,18 @@ package org.rorick.algoclass.week1.merge
 object mergesort {
 
   def merge(xs: Array[Int], from: Int, m: Int, until: Int) {
-    if (xs(from) > xs(m)) {
-      val t = xs(from)
-      xs(from) = xs(m)
-      xs(m) = t
+    require(from <= m && m <= until)
+
+    var (i, j) = (from, m)
+    while (i < j && j < until) {
+      if (xs(i) < xs(j)) {
+        i = i + 1
+      } else {
+        val t = xs(i)
+        xs(i) = xs(j)
+        xs(j) = t
+        j = j + 1
+      }
     }
   }
 
@@ -20,10 +28,10 @@ object mergesort {
     assert(N >= 0)
 
     if (N > 1) {
-      val m = N / 2
-      sortImpl(xs, 0, m)
-      sortImpl(xs, m, N)
-      merge(xs, 0, m, N)
+      val m = (from + until) >> 1
+      sortImpl(xs, from, m)
+      sortImpl(xs, m, until)
+      merge(xs, from, m, until)
     }
   }
 
