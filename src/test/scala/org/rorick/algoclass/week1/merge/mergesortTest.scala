@@ -37,6 +37,51 @@ class mergesortTest extends FunSuite {
     assert(sort(List(2, 4, 5)) === List(2, 4, 5))
   }
 
+  test("should return sorted list when four element list") {
+    assert(sort(List(1, 2, 3, 4)) === List(1, 2, 3, 4))
+    assert(sort(List(1, 2, 4, 3)) === List(1, 2, 3, 4))
+    assert(sort(List(1, 3, 2, 4)) === List(1, 2, 3, 4))
+    assert(sort(List(1, 3, 4, 2)) === List(1, 2, 3, 4))
+    assert(sort(List(1, 4, 2, 3)) === List(1, 2, 3, 4))
+    assert(sort(List(1, 4, 3, 2)) === List(1, 2, 3, 4))
+    assert(sort(List(2, 1, 3, 4)) === List(1, 2, 3, 4))
+    assert(sort(List(2, 1, 4, 3)) === List(1, 2, 3, 4))
+    assert(sort(List(2, 3, 1, 4)) === List(1, 2, 3, 4))
+    assert(sort(List(2, 3, 4, 1)) === List(1, 2, 3, 4))
+    assert(sort(List(2, 4, 1, 3)) === List(1, 2, 3, 4))
+    assert(sort(List(2, 4, 3, 1)) === List(1, 2, 3, 4))
+    assert(sort(List(3, 1, 2, 4)) === List(1, 2, 3, 4))
+    assert(sort(List(3, 1, 4, 2)) === List(1, 2, 3, 4))
+    assert(sort(List(3, 2, 1, 4)) === List(1, 2, 3, 4))
+    assert(sort(List(3, 2, 4, 1)) === List(1, 2, 3, 4))
+    assert(sort(List(3, 4, 1, 2)) === List(1, 2, 3, 4))
+    assert(sort(List(3, 4, 2, 1)) === List(1, 2, 3, 4))
+    assert(sort(List(4, 1, 2, 3)) === List(1, 2, 3, 4))
+    assert(sort(List(4, 1, 3, 2)) === List(1, 2, 3, 4))
+    assert(sort(List(4, 2, 1, 3)) === List(1, 2, 3, 4))
+    assert(sort(List(4, 2, 3, 1)) === List(1, 2, 3, 4))
+    assert(sort(List(4, 3, 1, 2)) === List(1, 2, 3, 4))
+    assert(sort(List(4, 3, 2, 1)) === List(1, 2, 3, 4))
+  }
+
+  test("should sort random 5 element lists") {
+    val expected = (1 to 5).toList
+    expected.permutations.foreach { xs =>
+      assert(sort(xs) === expected, xs)
+    }
+  }
+
+  test("should sort random 10 element lists") {
+    val expected = (1 to 10).toList
+    expected.permutations.foreach { xs =>
+      assert(sort(xs) === expected, xs)
+    }
+  }
+
+  test("should sort 5 element list") {
+    assert(sort(List(3, 4, 5, 1, 2)) === List(1, 2, 3, 4, 5))
+  }
+
   test("should return new list") {
     val unsortedList = List(5, 2)
     assert(!(sort(unsortedList) eq unsortedList))
