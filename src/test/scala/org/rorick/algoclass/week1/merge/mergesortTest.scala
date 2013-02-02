@@ -78,6 +78,14 @@ class mergesortTest extends FunSuite {
     }
   }
 
+  test("should sort random 100 element list") {
+    val expected = (1 to 100).toList
+
+    val shuffled = scala.util.Random.shuffle(expected)
+
+    assert(sort(shuffled) === expected, shuffled)
+  }
+
   test("should sort 5 element list") {
     assert(sort(List(3, 4, 5, 1, 2)) === List(1, 2, 3, 4, 5))
   }
