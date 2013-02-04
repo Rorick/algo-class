@@ -4,7 +4,7 @@ package org.rorick.algoclass.week1.inversions
  * Calculate number of inversions in array via mergesort.
  */
 object inversions {
-  def merge(xs: Array[Int], from: Int, m: Int, to: Int): Int = {
+  def merge(xs: Array[Int], from: Int, m: Int, to: Int): Long = {
     require(from <= m && m <= to)
 
     var (i, j) = (from, m)
@@ -30,7 +30,7 @@ object inversions {
     splitInversions
   }
 
-  private def sortImpl(xs: Array[Int], from: Int, to: Int): Int = {
+  private def sortImpl(xs: Array[Int], from: Int, to: Int): Long = {
     val N: Int = to - from + 1
     assert(N >= 0)
 
@@ -46,7 +46,7 @@ object inversions {
   }
 
 
-  def inversions(xs: List[Int]): Int = {
+  def inversions(xs: List[Int]): Long = {
     val xsArray = xs.toArray
     sortImpl(xsArray, 0, xs.size - 1)
   }
