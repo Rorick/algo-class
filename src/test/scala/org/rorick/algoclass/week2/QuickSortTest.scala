@@ -58,7 +58,7 @@ class QuickSortTest extends FunSuite with PropertyChecks with ShouldMatchers {
   }
 
   test("partition should use pivot function") {
-    val fifthElement = (i: Int, j: Int) => i + 3
+    val fifthElement = (a: Array[Int], i: Int, j: Int) => i + 3
     val a = Array(5, 8, 2, 3, 1, 4, 7, 6)
     val p = partition(a, 0, 7)(fifthElement)
     a should equal (Array(1, 2, 3, 5, 8, 4, 7, 6))
