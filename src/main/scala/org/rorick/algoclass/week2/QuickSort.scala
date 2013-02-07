@@ -13,11 +13,12 @@ object QuickSort {
     a(j) = t
   }
 
-  private[week2] def partition(a: Array[Int], l: Int, h: Int)(implicit pivot: (Int, Int) => Int): Array[Int] = {
+  private[week2] def partition(a: Array[Int], l: Int, h: Int)(implicit pivot: (Int, Int) => Int): Int = {
     require(a.length > 1)
 
     // put pivot on the first element
-    swap(a, l, pivot(l, h))
+    val p = pivot(l, h)
+    swap(a, l, p)
 
     var i = l + 1
     (l + 1 to h) foreach { j =>
@@ -27,6 +28,19 @@ object QuickSort {
       }
     }
     swap(a, l, i - 1)
+    i - 1
+  }
+
+  def quicksort(a: Array[Int])(implicit pivot: (Int, Int) => Int): Array[Int] = {
+    def quicksortImpl(a: Array[Int], l: Int, h: Int) {
+      if (h - l + 1 > 1) {
+        val pivotPos = partition(a, l, h)(pivot)
+        quicksortImpl(a, l, pivotPos - 1)
+        quicksortImpl(a, pivotPos + 1, h)
+      }
+    }
+
+    quicksortImpl(a, 0, a.length - 1)
     a
   }
 }
