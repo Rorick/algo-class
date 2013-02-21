@@ -27,12 +27,6 @@ class MinCutFinder(incidents: List[List[Int]], nextNode: (Int => Int)) {
   }
 }
 
-sealed trait Node
-
-case class SimpleNode(value: Int) extends Node
-
-case class MergedNode(values: Node*) extends Node
-
 object MinCutFinder extends App {
   val seed = System.currentTimeMillis()
   val random = new Random(seed)
