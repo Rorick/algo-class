@@ -7,6 +7,7 @@ sealed trait Node
 
 case class SimpleNode(value: Int) extends Node {
   override val toString = value.toString
+
 }
 
 case class MergedNode(values: Node*) extends Node {

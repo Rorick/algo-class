@@ -21,7 +21,6 @@ class MinCutFinder(incidents: List[List[Int]], nextNode: (Int => Int)) {
       // call recursively
       calculateMinCutSize(graph)
     } else {
-      println(graph.edges)
       graph.edges.size / 2
     }
   }
