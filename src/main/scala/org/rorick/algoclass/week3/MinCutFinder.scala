@@ -1,5 +1,7 @@
 package org.rorick.algoclass.week3
 
+import util.Random
+
 
 /**
  * Implementation of randomized min cut search algorithm.
@@ -31,3 +33,10 @@ case class SimpleNode(value: Int) extends Node
 
 case class MergedNode(values: Node*) extends Node
 
+object MinCutFinder extends App {
+  val seed = System.currentTimeMillis()
+  val random = new Random(seed)
+
+  println(seed)
+  println(new MinCutFinder(List(List(1, 2, 3), List(2, 1, 3, 4), List(3, 1, 2, 4), List(4, 2, 3)), n => random.nextInt(n)).minCutSize)
+}
