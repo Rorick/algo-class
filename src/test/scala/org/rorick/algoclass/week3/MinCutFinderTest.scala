@@ -32,7 +32,7 @@ class MinCutFinderTest extends FunSuite with ShouldMatchers {
     result should equal(1)
   }
 
-  test("Min cut of four vertices connected graph should be tree") {
+  test("Min cut of four vertices connected graph should be three") {
     val result = new MinCutFinder(List(
       List(1, 2, 3, 4), List(2, 1, 3, 4), List(3, 1, 2, 4), List(4, 1, 2, 3))).minCutSize
 
