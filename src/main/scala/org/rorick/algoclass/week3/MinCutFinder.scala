@@ -1,6 +1,8 @@
 package org.rorick.algoclass.week3
 
 import util.Random
+import io.Source
+import collection.mutable.ListBuffer
 
 
 /**
@@ -27,9 +29,21 @@ class MinCutFinder(incidents: List[List[Int]], nextNode: (Int => Int)) {
 }
 
 object MinCutFinder extends App {
-  val seed = System.currentTimeMillis()
-  val random = new Random(seed)
 
-  println(seed)
-  println(new MinCutFinder(List(List(1, 2, 3), List(2, 1, 3, 4), List(3, 1, 2, 4), List(4, 2, 3)), n => random.nextInt(n)).minCutSize)
+  val graph = new ListBuffer[List[Int]]
+  Source.fromFile("C:\\Users\\Rorick\\IdeaProjects\\algo-class\\src\\main\\resources\\kargerMinCut.txt").getLines().foreach {
+    line =>
+      graph += line.split("\t").map(_.toInt).toList
+  }
+
+  val numNodes = graph.size
+  val numTrials = Math.ceil(numNodes * 2 * Math.log(numNodes)).toInt
+  val minCuts = new ListBuffer[Int]
+
+  (1 to numTrials) foreach {
+    i =>
+      val random = new Random
+      minCuts += new MinCutFinder(graph.toList, n => random.nextInt(n)).minCutSize
+  }
+  println(minCuts.min)
 }
