@@ -51,6 +51,11 @@ class GraphTest extends FunSuite with PropertyChecks with ShouldMatchers {
     sccs should (have length (3) and contain (1) and not contain(2) and not contain(3))
   }
 
+  test("should calculate SCCs of lecture graph") {
+    val sccs = new Graph((1, 7), (7, 4), (4, 1), (7, 9), (9, 6), (6, 3), (3, 9), (6, 8), (8, 2), (2, 5), (5, 8)).sccs
+    sccs should equal (List(3, 3, 3))
+  }
+
   test("should calculate proper reversed graph") {
     val data = Table(
       ("edges", "reversed edges"),
