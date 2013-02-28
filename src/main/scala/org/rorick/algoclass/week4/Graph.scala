@@ -100,16 +100,28 @@ object Graph {
   }
 
   def dfs(graph: Graph, node: Int, explored: mutable.Set[Int], fs: mutable.Map[Int, Int]) {
-    // explore node
-    explored += node
-    graph incidents (node) foreach {
-      case (u, v) if !explored(v) =>
-        dfs(graph, v, explored, fs)
-      case _ =>
+    val stack = mutable.Stack[(Int, List[Edge])]()
+    stack.push((node, graph.incidents(node)))
+    while (!stack.isEmpty) {
+
+      val (n, edges) = stack.pop()
+
+      if (!explored(n)) {
+        explored += n
+      }
+
+      val unexploredEdges = edges.filterNot({
+        case (_, v) => explored(v)
+      })
+      if (unexploredEdges.isEmpty) {
+        t = t + 1
+        fs(n) = t
+      } else {
+        val (_, v) :: restUnexploredEdges = unexploredEdges
+        stack.push((n, restUnexploredEdges))
+        stack.push((v, graph.incidents(v)))
+      }
     }
-    //     t++
-    t = t + 1
-    //     ft(node) = t
-    fs(node) = t
   }
+
 }
