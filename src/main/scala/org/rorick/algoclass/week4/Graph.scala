@@ -1,14 +1,16 @@
 package org.rorick.algoclass.week4
 
 import collection.mutable
-import collection.mutable.ListBuffer
+import collection.mutable.{ArrayBuffer, ListBuffer}
 
 /**
  * Graph representation for SCCs problem. Would be great if we could unify it with week 3 graph, but that is completely
  * optional.
  */
-class Graph(val edges: Edge*) {
-  def this() = this(List.empty: _*)
+class Graph(val edges: ArrayBuffer[Edge]) {
+  def this() = this(ArrayBuffer[Edge]())
+
+  def this(edges: Edge*) = this(ArrayBuffer[Edge](edges: _*))
 
   def nodes = {
     val ns = collection.mutable.Set[Int]()
@@ -23,7 +25,7 @@ class Graph(val edges: Edge*) {
 
   def reversed = new Graph(edges map {
     case (u, v) => (v, u)
-  }: _*)
+  })
 
   def sccs: List[Int] = {
     // reverse edges
@@ -63,7 +65,7 @@ class Graph(val edges: Edge*) {
   }
 
   def dfs1(graph: Graph, node: Int, explored: mutable.Set[Int], visited: mutable.Set[Int]) {
-    val stack = mutable.Stack[(Int, List[Edge])]()
+    val stack = mutable.Stack[(Int, Seq[Edge])]()
     stack.push((node, graph.incidents(node)))
     while (!stack.isEmpty) {
 
@@ -79,16 +81,26 @@ class Graph(val edges: Edge*) {
       })
       if (unexploredEdges.isEmpty) {
       } else {
-        val (_, v) :: restUnexploredEdges = unexploredEdges
+        val (_, v) = unexploredEdges(0)
+        val restUnexploredEdges = unexploredEdges.drop(1)
         stack.push((n, restUnexploredEdges))
         stack.push((v, graph.incidents(v)))
       }
     }
   }
 
-  def incidents(node: Int): List[Edge] = edges.filter {
-    case e@(u, _) => u == node
-  }.toList
+
+  val incidents = {
+    val incidents = mutable.Map[Int, ArrayBuffer[Edge]]().withDefault(_  => ArrayBuffer[Edge]())
+    edges foreach {
+      case e@(u, _) => {
+        val inc = incidents(u)
+        inc += e
+        incidents(u) = inc
+      }
+    }
+    incidents
+  }
 }
 
 object Graph {
@@ -113,7 +125,7 @@ object Graph {
   }
 
   def dfs(graph: Graph, node: Int, explored: mutable.Set[Int], fs: mutable.Map[Int, Int]) {
-    val stack = mutable.Stack[(Int, List[Edge])]()
+    val stack = mutable.Stack[(Int, Seq[Edge])]()
     stack.push((node, graph.incidents(node)))
     while (!stack.isEmpty) {
 
@@ -130,7 +142,8 @@ object Graph {
         t = t + 1
         fs(n) = t
       } else {
-        val (_, v) :: restUnexploredEdges = unexploredEdges
+        val (_, v) = unexploredEdges(0)
+        val restUnexploredEdges = unexploredEdges.drop(1)
         stack.push((n, restUnexploredEdges))
         stack.push((v, graph.incidents(v)))
       }

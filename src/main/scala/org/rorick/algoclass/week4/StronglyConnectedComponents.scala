@@ -1,13 +1,13 @@
 package org.rorick.algoclass.week4
 
 import io.Source
-import collection.mutable.ListBuffer
+import collection.mutable.ArrayBuffer
 
 /**
  * Solution for programming assignment week 4.
  */
 object StronglyConnectedComponents extends App {
-  val g = ListBuffer[Edge]()
+  val g = new ArrayBuffer[Edge](6000000)
   Source.fromFile("C:\\Users\\Rorick\\IdeaProjects\\algo-class\\src\\main\\resources\\SCC.txt").getLines().foreach {
       line: String =>
         val Array(u, v) = line.split(" ")
