@@ -20,7 +20,7 @@ object DijkstraShortestPath extends App with JavaTokenParsers {
     (parseAll(line, input): @unchecked) match {case Success(result, _) => result}
   }
 
-  def line: Parser[(Node, List[Edge])] = node~rep(edge) ^^ {case (n: Node)~(es: List[Edge]) => (n, es)}
+  def line: Parser[(Node, List[(Node, Int)])] = node~rep(edge) ^^ {case n~es => (n, es)}
   def edge: Parser[(Node, Int)] = node~","~length ^^ {case n~","~l => (n, l)}
   def node: Parser[Node] = wholeNumber ^^ (_.toInt)
   def length: Parser[Int] = wholeNumber ^^ (_.toInt)
