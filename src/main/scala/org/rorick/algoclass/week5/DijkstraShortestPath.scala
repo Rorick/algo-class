@@ -32,5 +32,7 @@ object DijkstraShortestPath extends App with JavaTokenParsers {
       graph.addNode(n, edge)
   }
 
-  println(graph)
+  val distancesFromOne = graph.shortestPathsDistances(1)
+
+  println(List(7,37,59,82,99,115,133,165,188,197) map (distancesFromOne(_)) mkString(","))
 }
