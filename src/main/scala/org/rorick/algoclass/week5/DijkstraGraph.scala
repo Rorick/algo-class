@@ -12,14 +12,19 @@ class DijkstraGraph {
   private val incs = mutable.Map[Node, ListBuffer[(Edge, Int)]]().withDefault(_ => ListBuffer())
 
   def addNode(node: Node, edgesInfo: List[(Node, Int)]) {
+    require(1 to 200 contains node)
+
     ns += node
     edgesInfo foreach {
       case (n, l) =>
-      val edge = (node -> n, l)
-      es += edge
-      val incidents = incs(node)
-      incidents += edge
-      incs(node) = incidents
+        require(1 to 200 contains n)
+        require(0 <= l && l <= 1000000)
+
+        val edge = (node -> n, l)
+        es += edge
+        val incidents = incs(node)
+        incidents += edge
+        incs(node) = incidents
     }
   }
 
