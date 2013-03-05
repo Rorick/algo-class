@@ -9,22 +9,21 @@ import collection.mutable
 class DijkstraGraph {
   private val ns = ListBuffer[Node]()
   private val es = ListBuffer[(Edge, Int)]()
-  private val incs = mutable.Map[Node, ListBuffer[(Edge, Int)]]().withDefault(_ => ListBuffer())
+  private val incs = mutable.Map[Node, ListBuffer[(Edge, Int)]]()
 
   def addNode(node: Node, edgesInfo: List[(Node, Int)]) {
-    require(1 to 200 contains node)
+    require(DijkstraGraph.AllowedNodes contains node)
 
     ns += node
     edgesInfo foreach {
       case (n, l) =>
-        require(1 to 200 contains n)
+        require(DijkstraGraph.AllowedNodes contains n)
         require(0 <= l && l <= DijkstraGraph.Infinity)
 
         val edge = (node -> n, l)
         es += edge
-        val incidents = incs(node)
+        val incidents = incs.getOrElseUpdate(node, ListBuffer())
         incidents += edge
-        incs(node) = incidents
     }
   }
 
@@ -34,11 +33,11 @@ class DijkstraGraph {
     val V = mutable.Set() ++ nodes - source
 
     while (!V.isEmpty) {
-      val ((_, v), bestLen) = {
+      val (v, bestLen) = {
         for {
           ((u, v), l) <- edges
           if X(u) && V(v)
-        } yield (u -> v, distances(u) + l)
+        } yield (v, distances(u) + l)
       } minBy {
         case (_, l) => l
       }
@@ -61,5 +60,6 @@ class DijkstraGraph {
 
 object DijkstraGraph {
   val Infinity = 1000000
+  val AllowedNodes = 1 to 200
 }
 
