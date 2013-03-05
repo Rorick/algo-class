@@ -25,8 +25,12 @@ object DijkstraShortestPath extends App with JavaTokenParsers {
   def node: Parser[Node] = wholeNumber ^^ (_.toInt)
   def length: Parser[Int] = wholeNumber ^^ (_.toInt)
 
+  val graph = new DijkstraGraph
   io.Source.fromInputStream(getClass.getResourceAsStream("dijkstraData.txt")).getLines().foreach {
     line =>
-      println(parseLine(line))
+      val (n, edge) = parseLine(line)
+      graph.addNode(n, edge)
   }
+
+  println(graph)
 }

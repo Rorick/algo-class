@@ -33,4 +33,6 @@ class DijkstraGraph {
   def edges: List[(Edge, Int)] = es.toList
 
   def incidents(node: Node): List[(Edge, Int)] = incs(node).toList
+
+  override def toString = s"Undirected graph[#nodes=${nodes.length}, #edges=${edges.length}]"
 }
