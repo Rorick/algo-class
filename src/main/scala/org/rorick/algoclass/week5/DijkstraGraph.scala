@@ -7,6 +7,8 @@ import collection.mutable
  * Graph for solving assignment.
  */
 class DijkstraGraph {
+  val Infinity = 1000000
+
   private val ns = ListBuffer[Node]()
   private val es = ListBuffer[(Edge, Int)]()
   private val incs = mutable.Map[Node, ListBuffer[(Edge, Int)]]().withDefault(_ => ListBuffer())
@@ -18,7 +20,7 @@ class DijkstraGraph {
     edgesInfo foreach {
       case (n, l) =>
         require(1 to 200 contains n)
-        require(0 <= l && l <= 1000000)
+        require(0 <= l && l <= Infinity)
 
         val edge = (node -> n, l)
         es += edge
@@ -26,6 +28,28 @@ class DijkstraGraph {
         incidents += edge
         incs(node) = incidents
     }
+  }
+
+  def shortestPathsDistances(source: Node): Map[Node, Int] = {
+    val distances = mutable.Map(source -> 0).withDefaultValue(Infinity)
+    val X = mutable.Set(source)
+    val V = mutable.Set() ++ nodes - source
+
+    while (!V.isEmpty) {
+      val ((_, v), bestLen) = {
+        for {
+          ((u, v), l) <- edges
+          if X(u) && V(v)
+        } yield (u -> v, distances(u) + l)
+      } minBy {
+        case (_, l) => l
+      }
+      X += v
+      V -= v
+      distances(v) = bestLen
+    }
+
+    distances.toMap
   }
 
   def nodes: List[Node] = ns.toList
