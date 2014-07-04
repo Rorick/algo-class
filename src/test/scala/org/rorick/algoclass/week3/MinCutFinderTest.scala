@@ -1,14 +1,14 @@
 package org.rorick.algoclass.week3
 
-import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.prop.PropertyChecks
-import util.Random
+import org.scalatest.{FunSuite, Matchers}
+
+import scala.util.Random
 
 /**
  * Test case for [[org.rorick.algoclass.week3.MinCutFinder]].
  */
-class MinCutFinderTest extends FunSuite with ShouldMatchers with PropertyChecks {
+class MinCutFinderTest extends FunSuite with Matchers with PropertyChecks {
 
   test("Min cut of one vertex graph should be zero") {
     val result = new MinCutFinder(List()).minCutSize

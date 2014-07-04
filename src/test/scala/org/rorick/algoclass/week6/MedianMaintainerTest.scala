@@ -1,13 +1,12 @@
 package org.rorick.algoclass.week6
 
-import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.prop.PropertyChecks
+import org.scalatest.{FunSuite, Matchers}
 
 /**
  * Test case for [[org.rorick.algoclass.week6.MedianMaintainer]].
  */
-class MedianMaintainerTest extends FunSuite with ShouldMatchers with PropertyChecks {
+class MedianMaintainerTest extends FunSuite with Matchers with PropertyChecks {
   test("should return median of elements") {
     val data = Table(
       ("elements", "median"),
@@ -26,7 +25,7 @@ class MedianMaintainerTest extends FunSuite with ShouldMatchers with PropertyChe
     forAll(data) {
       (elements, median) =>
         val maintainer = new MedianMaintainer
-        elements foreach (maintainer.add(_))
+        elements foreach maintainer.add
         maintainer.median should equal(median)
     }
   }

@@ -1,25 +1,24 @@
 package org.rorick.algoclass.week2
 
-import org.scalatest.FunSuite
 import org.scalatest.prop.PropertyChecks
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{FunSuite, Matchers}
 
 /**
  * Test case for quick sort.
  */
-class QuickSortTest extends FunSuite with PropertyChecks with ShouldMatchers {
-  import QuickSort._
+class QuickSortTest extends FunSuite with PropertyChecks with Matchers {
+  import org.rorick.algoclass.week2.QuickSort._
 
   test("partition should be not defined for empty array") {
-    evaluating {
+    an [IllegalArgumentException] should be thrownBy {
       partition(Array(), 0, 0)
-    } should produce[IllegalArgumentException]
+    }
   }
 
   test("partition should be not defined for one element array") {
-    evaluating {
+    an [IllegalArgumentException] should be thrownBy {
       partition(Array(5), 0, 0)
-    } should produce[IllegalArgumentException]
+    }
   }
 
   test("partition should correctly partition two or greater elements arrays") {

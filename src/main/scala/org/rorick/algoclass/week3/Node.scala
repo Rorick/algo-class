@@ -6,8 +6,7 @@ package org.rorick.algoclass.week3
 sealed trait Node
 
 case class SimpleNode(value: Int) extends Node {
-  override val toString = value.toString
-
+  override val toString = "[" + value + "]"
 }
 
 case class MergedNode(values: Node*) extends Node {

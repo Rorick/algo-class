@@ -1,15 +1,14 @@
 package org.rorick.algoclass.week1.merge
 
-import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.prop.PropertyChecks
+import org.scalatest.{FunSuite, Matchers}
 
 /**
  * Test case for [[org.rorick.algoclass.week1.merge.mergesort]].
  */
-class mergesortTest extends FunSuite with ShouldMatchers with PropertyChecks {
+class mergesortTest extends FunSuite with Matchers with PropertyChecks {
 
-  import mergesort._
+  import org.rorick.algoclass.week1.merge.mergesort._
 
   test("should return same list when zero element list") {
     sort(List()) should equal(List())
@@ -117,6 +116,6 @@ class mergesortTest extends FunSuite with ShouldMatchers with PropertyChecks {
     sort(sortedList) should (not be theSameInstanceAs(sortedList))
 
     val emptyList = List()
-    sort(emptyList) should (be theSameInstanceAs (emptyList))
+    sort(emptyList) should be theSameInstanceAs emptyList
   }
 }

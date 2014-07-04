@@ -1,13 +1,12 @@
 package org.rorick.algoclass.week1.inversions
 
-import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.prop.PropertyChecks
+import org.scalatest.{FunSuite, Matchers}
 
 /**
  * Test case for [[org.rorick.algoclass.week1.inversions.inversions]].
  */
-class inversionsTest extends FunSuite with PropertyChecks with ShouldMatchers {
+class inversionsTest extends FunSuite with PropertyChecks with Matchers {
   test("inversions of empty list") {
     inversions.inversions(List()) should equal (0)
   }

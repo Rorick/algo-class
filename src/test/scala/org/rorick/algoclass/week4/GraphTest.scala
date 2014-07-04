@@ -1,24 +1,23 @@
 package org.rorick.algoclass.week4
 
-import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.prop.PropertyChecks
+import org.scalatest.{FunSuite, Matchers}
 
 /**
  * Test case for [[org.rorick.algoclass.week4.Graph]].
  */
-class GraphTest extends FunSuite with PropertyChecks with ShouldMatchers {
+class GraphTest extends FunSuite with PropertyChecks with Matchers {
   test("should calculate SCC of zero node graph") {
-    new Graph().sccs should (have length (0))
+    new Graph().sccs should have length 0
   }
 
   test("should calculate SCC of one node graph") {
     val maxNodeNum = 875714
-    new Graph((maxNodeNum, maxNodeNum)).sccs should (have length (1))
+    new Graph((maxNodeNum, maxNodeNum)).sccs should have length 1
   }
 
   test("should calculate SCC of two node graph with one component") {
-    new Graph((1, 2), (2, 1)).sccs should (have length (1))
+    new Graph((1, 2), (2, 1)).sccs should have length 1
   }
 
   test("should calculate SCC of two node graph with two components") {
@@ -31,14 +30,14 @@ class GraphTest extends FunSuite with PropertyChecks with ShouldMatchers {
 
     forAll(data) {
       (edges, expectedSccsNum) =>
-        new Graph(edges: _*).sccs should (have length (expectedSccsNum))
+        new Graph(edges: _*).sccs should have length expectedSccsNum
     }
   }
 
   test("should calculate SCC of three node graph with one component") {
     val sccs = new Graph((1, 2), (2, 3), (3, 1)).sccs
-    sccs should (have length (1))
-    sccs(0) should (equal(3))
+    sccs should (have length 1)
+    sccs(0) should equal(3)
   }
 
   test("should calculate SCC of three node graph with two components") {
@@ -90,7 +89,7 @@ class GraphTest extends FunSuite with PropertyChecks with ShouldMatchers {
         val fs = Graph.dfsLoopF(new Graph(edges: _*))
         finishingTimes.keys foreach {
           n =>
-            finishingTimes(n) should (equal(fs(n)))
+            finishingTimes(n) should equal(fs(n))
         }
     }
   }

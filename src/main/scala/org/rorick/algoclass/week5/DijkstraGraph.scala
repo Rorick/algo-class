@@ -1,7 +1,7 @@
 package org.rorick.algoclass.week5
 
-import collection.mutable.ListBuffer
-import collection.mutable
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
  * Graph for solving assignment.
@@ -32,7 +32,7 @@ class DijkstraGraph {
     val X = mutable.Set(source)
     val V = mutable.Set() ++ nodes - source
 
-    while (!V.isEmpty) {
+    while (V.nonEmpty) {
       val (v, bestLen) = {
         for {
           ((u, v), l) <- edges

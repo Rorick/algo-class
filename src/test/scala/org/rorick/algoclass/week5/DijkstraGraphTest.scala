@@ -1,12 +1,11 @@
 package org.rorick.algoclass.week5
 
-import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{FunSuite, Matchers}
 
 /**
  * Test case for [[org.rorick.algoclass.week5.DijkstraGraph]].
  */
-class DijkstraGraphTest extends FunSuite with ShouldMatchers {
+class DijkstraGraphTest extends FunSuite with Matchers {
   test("should correctly assemble graph of one node") {
     val graph = new DijkstraGraph
 
