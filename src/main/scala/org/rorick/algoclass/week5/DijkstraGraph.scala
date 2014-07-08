@@ -9,7 +9,7 @@ import scala.collection.mutable.ListBuffer
 class DijkstraGraph {
   private val ns = ListBuffer[Node]()
   private val es = ListBuffer[(Edge, Int)]()
-  private val incs = mutable.Map[Node, ListBuffer[(Edge, Int)]]()
+  private val incs = mutable.Map[Node, ListBuffer[(Edge, Int)]]().withDefaultValue(ListBuffer.empty)
 
   def addNode(node: Node, edgesInfo: List[(Node, Int)]) {
     require(DijkstraGraph.AllowedNodes contains node)
@@ -46,6 +46,35 @@ class DijkstraGraph {
       distances(v) = bestLen
     }
 
+    distances.toMap
+  }
+
+  def shortestPathsDistancesWithHeap(source: Node): Map[Node, Int] = {
+    val distances = mutable.Map(source -> 0).withDefaultValue(DijkstraGraph.Infinity)
+    val X: mutable.Set[Node] = mutable.Set()
+    val heapContent = List((0, source)) ++
+      List.fill(nodes.size - 1)(DijkstraGraph.Infinity).zip(Set(nodes: _*) - source)
+    // reverse ordering by first element, i.e. distance
+    // heap contains the next node to extract with shortest distance from source
+    var heap = mutable.PriorityQueue(heapContent: _*)(Ordering.Tuple2(Ordering.Int.reverse, Ordering.Int))
+
+    while (heap.nonEmpty) {
+      val (bestLen, v) = heap.dequeue()
+      X += v
+      distances(v) = bestLen
+      val incidentEdges = incidents(v)
+      // modify heap. As remove is not supported, simulate it
+      val toUpdate = for {((_, u), l) <- incidentEdges if !X(u)} yield ((distances(u), u), l)
+      heap = heap.filterNot {
+        toUpdate.map(_._1).contains(_)
+      }
+      for (((curBestLen, u), l) <- toUpdate) {
+        assert(curBestLen == distances(u))
+        val newBestLen = math.min(curBestLen, bestLen + l)
+        heap.enqueue((newBestLen, u))
+        distances(u) = newBestLen
+      }
+    }
     distances.toMap
   }
 

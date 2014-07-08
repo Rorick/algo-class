@@ -1,6 +1,6 @@
 package org.rorick.algoclass.week5
 
-import util.parsing.combinator.JavaTokenParsers
+import scala.util.parsing.combinator.JavaTokenParsers
 
 /**
  * Main class for Dijkstra shortest paths programming assignment.
@@ -17,12 +17,17 @@ object DijkstraShortestPath extends App with JavaTokenParsers {
    * @return parsed data
    */
   def parseLine(input: String): (Node, List[Edge]) = {
-    (parseAll(line, input): @unchecked) match {case Success(result, _) => result}
+    (parseAll(line, input): @unchecked) match {
+      case Success(result, _) => result
+    }
   }
 
-  def line: Parser[(Node, List[(Node, Int)])] = node~rep(edge) ^^ {case n~es => (n, es)}
-  def edge: Parser[(Node, Int)] = node~","~length ^^ {case n~","~l => (n, l)}
+  def line: Parser[(Node, List[(Node, Int)])] = node ~ rep(edge) ^^ { case n ~ es => (n, es)}
+
+  def edge: Parser[(Node, Int)] = node ~ "," ~ length ^^ { case n ~ "," ~ l => (n, l)}
+
   def node: Parser[Node] = wholeNumber ^^ (_.toInt)
+
   def length: Parser[Int] = wholeNumber ^^ (_.toInt)
 
   val graph = new DijkstraGraph
@@ -34,5 +39,6 @@ object DijkstraShortestPath extends App with JavaTokenParsers {
 
   val distancesFromOne = graph.shortestPathsDistances(1)
 
-  println(List(7,37,59,82,99,115,133,165,188,197) map (distancesFromOne(_)) mkString(","))
+  println(List(7, 37, 59, 82, 99, 115, 133, 165, 188, 197) map (distancesFromOne(_)) mkString ",")
+  // 2599,2610,2947,2052,2367,2399,2029,2442,2505,3068
 }

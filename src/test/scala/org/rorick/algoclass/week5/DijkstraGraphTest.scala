@@ -12,8 +12,8 @@ class DijkstraGraphTest extends FunSuite with Matchers {
     graph.addNode(1, List())
 
     graph.nodes should equal(List(1))
-    graph.edges should be ('empty)
-    graph.incidents(1) should be ('empty)
+    graph.edges should be (empty)
+    graph.incidents(1) should be (empty)
   }
 
   test("should correctly assemble graph of two nodes") {
