@@ -8,7 +8,7 @@ import org.scalatest.{FunSuite, Matchers}
  */
 class GreedySchedulerStraightForward$Test extends FunSuite with Matchers with PropertyChecks {
 
-  import org.rorick.algoclass.part2.week1.GreedySchedulerStraightForward.{Job, rankFunction, scheduleJobs, weightedSum}
+  import org.rorick.algoclass.part2.week1.GreedySchedulerStraightForward.{rankFunction, scheduleJobs}
 
   test("should schedule empty jobs") {
     scheduleJobs(List.empty[Job]) should be(empty)

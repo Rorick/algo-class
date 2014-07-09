@@ -27,36 +27,16 @@ import scala.collection.mutable
  */
 object GreedySchedulerStraightForward extends App {
   def scheduleJobs(jobs: Seq[Job]): Seq[Job] = {
-    val queue = mutable.PriorityQueue[Job](jobs: _*)(new Ordering[Job] {
-      override def compare(x: Job, y: Job): Int = {
-        if (x.rank < y.rank) {
-          -1
-        } else if (x.rank > y.rank) {
-          1
-        } else {
-          x.w - y.w
-        }
-      }
-    })
+
+    val queue = mutable.PriorityQueue[Job](jobs: _*)
 
     queue.dequeueAll.toList
   }
-
-  def weightedSum(schedule: Seq[Job]): Long =
-    schedule.foldLeft((0, 0L)) { (agg, job) =>
-      val (completionTime, sum) = agg
-      val newCompletionTime = completionTime + job.l
-      (newCompletionTime, sum + job.w * newCompletionTime)
-    }._2
 
   private val lines = io.Source.fromInputStream(getClass.getResourceAsStream("jobs.txt")).getLines()
   private val numJobs: Int = lines.next().toInt
 
   implicit def rankFunction(w: Int, l: Int) = w - l
-
-  case class Job(w: Int, l: Int)(implicit val rankFunction: (Int, Int) => Int) {
-    val rank = rankFunction(w, l)
-  }
 
   val jobs = new mutable.ArrayBuffer[Job](numJobs)
   lines.foreach { line =>
