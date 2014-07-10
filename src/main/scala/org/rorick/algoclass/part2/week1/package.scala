@@ -5,8 +5,8 @@ package org.rorick.algoclass.part2
  */
 package object week1 {
 
-  case class Job(w: Int, l: Int)(implicit val rankFunction: (Int, Int) => Int) {
-    val rank = rankFunction(w, l)
+  case class Job(w: Int, l: Int)(implicit val rankFunction: (Double, Double) => Double) {
+    val rank: Double = rankFunction(w, l)
   }
 
   def weightedSum(schedule: Seq[Job]): Long =

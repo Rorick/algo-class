@@ -36,17 +36,18 @@ object GreedySchedulerStraightForward extends App {
   private val lines = io.Source.fromInputStream(getClass.getResourceAsStream("jobs.txt")).getLines()
   private val numJobs: Int = lines.next().toInt
 
-  implicit def rankFunction(w: Int, l: Int) = w - l
-
-  val jobs = new mutable.ArrayBuffer[Job](numJobs)
+  val jobsStraightForwardRank = new mutable.ArrayBuffer[Job](numJobs)
+  val jobsCorrectRank = new mutable.ArrayBuffer[Job](numJobs)
   lines.foreach { line =>
     val Array(w, l) = line.split(" ")
-    jobs += Job(w.toInt, l.toInt)
+    jobsStraightForwardRank += Job(w.toInt, l.toInt)(_ - _)
+    jobsCorrectRank += Job(w.toInt, l.toInt)(_ / _)
   }
-  assert(jobs.size == numJobs, "Incorrect number of jobs in input file")
+  assert(jobsStraightForwardRank.size == numJobs, "Incorrect number of jobs in input file")
 
-  val schedule: Seq[Job] = scheduleJobs(jobs)
+  val straightForwardSchedule: Seq[Job] = scheduleJobs(jobsStraightForwardRank)
+  val correctSchedule: Seq[Job] = scheduleJobs(jobsCorrectRank)
 
-  println(weightedSum(jobs))
-  println(weightedSum(schedule))
+  println(weightedSum(straightForwardSchedule))
+  println(weightedSum(correctSchedule))
 }
