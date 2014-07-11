@@ -39,4 +39,7 @@ package object week1 {
       }
     }
   }
+
+  type Node = Int
+  case class Edge(u: Int, v: Int, l: Int)
 }

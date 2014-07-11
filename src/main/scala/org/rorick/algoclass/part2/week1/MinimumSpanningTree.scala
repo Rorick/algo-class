@@ -29,5 +29,15 @@ package org.rorick.algoclass.part2.week1
  * vertices and their positions in the heap.
  */
 object MinimumSpanningTree extends App {
+  val lines = io.Source.fromInputStream(getClass.getResourceAsStream("edges.txt")).getLines()
+  val Array(n, m) = lines.next().split(" ").map(_.toInt)
+  assert(n > 0 && m > 0, "Number of nodes and edges must be positive integers")
+  val graph = new Graph()
+  lines.foreach { line =>
+    val Array(u, v, l) = line.split(" ").map(_.toInt)
+    assert(u > 0 && v > 0, "Nodes must be positive integers")
+    graph += Edge(u, v, l)
+  }
+
 
 }
