@@ -36,8 +36,6 @@ object MinimumSpanningTree extends App {
   lines.foreach { line =>
     val Array(u, v, l) = line.split(" ").map(_.toInt)
     assert(u > 0 && v > 0, "Nodes must be positive integers")
-    graph += Edge(u, v, l)
+    graph += (u, v, l)
   }
-
-
 }

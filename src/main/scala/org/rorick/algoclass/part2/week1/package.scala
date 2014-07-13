@@ -1,5 +1,7 @@
 package org.rorick.algoclass.part2
 
+import scala.collection.mutable
+
 /**
  * Common stuff for schedulers etc.
  */
@@ -41,5 +43,12 @@ package object week1 {
   }
 
   type Node = Int
-  case class Edge(u: Int, v: Int, l: Int)
+
+  case class Edge(u: Int, v: Int, l: Int) {
+    require(u < v, "Edge must have u < v")
+
+    def crossesCut(A: mutable.Set[Node], B: mutable.Set[Node]): Boolean = {
+      A(u) && B(v) || A(v) && B(u)
+    }
+  }
 }
