@@ -38,4 +38,10 @@ object MinimumSpanningTree extends App {
     assert(u > 0 && v > 0, "Nodes must be positive integers")
     graph += (u, v, l)
   }
+
+  println(minimumSpanningTreeCost(graph.minimumSpanningTree()))
+
+  def minimumSpanningTreeCost(edges: Set[Edge]): Int = {
+    edges.foldLeft(0) ((sum, e) => sum + e.l)
+  }
 }

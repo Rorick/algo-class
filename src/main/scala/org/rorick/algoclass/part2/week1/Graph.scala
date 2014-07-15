@@ -26,11 +26,10 @@ class Graph extends Growable[Edge] {
         val e = cheapestEdge(X, V)
         //  add e to T
         T += e
-        assert(X(e.u))
-        assert(V(e.v))
         //  add v to X
-        X += e.v
-        V -= e.v
+        val v = if (V(e.v)) e.v else e.u
+        X += v
+        V -= v
       }
     }
     T.toSet
