@@ -42,6 +42,6 @@ object MinimumSpanningTree extends App {
   println(minimumSpanningTreeCost(graph.minimumSpanningTree()))
 
   def minimumSpanningTreeCost(edges: Set[Edge]): Int = {
-    edges.foldLeft(0) ((sum, e) => sum + e.l)
+    edges.map(_.l).reduceLeft(_ + _)
   }
 }
