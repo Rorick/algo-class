@@ -16,8 +16,9 @@ class UnionFind(points: Seq[Point]) {
   }
 
   def union(p: Point, q: Point): Point = {
-    require(find(p) != find(q), "Should belong to different clusters")
-    val (smaller, larger) = if (size(p) >= size(q)) (q, p) else (p, q)
+    val (leaderP, leaderQ) = (find(p), find(q))
+    require(leaderP != leaderQ, "Should belong to different clusters")
+    val (smaller, larger) = if (size(leaderP) >= size(leaderQ)) (leaderQ, leaderP) else (leaderP, leaderQ)
     updateMembership(smaller, larger)
     curSize -= 1
     leaders(larger)

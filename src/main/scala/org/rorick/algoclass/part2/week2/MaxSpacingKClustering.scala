@@ -4,7 +4,20 @@ import scala.collection.mutable
 import scala.io.Source
 
 class MaxSpacingKClustering(val K: Int, points: Set[Point], distances: Set[D]) {
-  def maxSpacing: Int = 0
+  private val sortedDistances: mutable.Queue[D] = mutable.Queue(distances.toList.sortBy(_.distance): _*)
+  private val unionFind = UnionFind(points.toList: _*)
+  require(unionFind.size >= K)
+  
+  while (unionFind.size > K) {
+    val d = sortedDistances.dequeue()
+    if (areSeparated(d.p, d.q)) {
+      unionFind.union(d.p, d.q)
+    }
+  }
+
+  private def areSeparated(p: Point, q: Point): Boolean = unionFind.find(p) != unionFind.find(q)
+  
+  def spacing: Int = (sortedDistances filter (d => areSeparated(d.p, d.q))).head.distance
 }
 
 /**
@@ -41,5 +54,5 @@ object MaxSpacingKClustering extends App {
   private val numDistances = (N - 1) * N / 2
   assert(distances.size == numDistances, s"Expected num distances is $numDistances, but was ${distances.size}")
 
-  println(new MaxSpacingKClustering(4, points.toSet, distances.toSet).maxSpacing)
+  println(new MaxSpacingKClustering(4, points.toSet, distances.toSet).spacing)
 }
