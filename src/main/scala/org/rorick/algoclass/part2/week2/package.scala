@@ -25,7 +25,7 @@ package org.rorick.algoclass.part2
  * is likely too big to fit in your computer's memory, so answering this part will take some ingenuity.
  */
 package object week2 {
-  type Node = Int
+  type Point = Int
 
   /**
    * Distance between two points tuned for using with Union-Find data structure.
@@ -34,7 +34,5 @@ package object week2 {
    * @param q second point
    * @param distance distance between points
    */
-  case class D(p: Int, q: Int, distance: Int) {
-    var leader: D = this
-  }
+  case class D(p: Point, q: Point, distance: Int)
 }

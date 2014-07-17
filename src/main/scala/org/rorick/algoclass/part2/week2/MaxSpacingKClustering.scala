@@ -3,6 +3,10 @@ package org.rorick.algoclass.part2.week2
 import scala.collection.mutable
 import scala.io.Source
 
+class MaxSpacingKClustering(val K: Int, points: Set[Point], distances: Set[D]) {
+  def maxSpacing: Int = 0
+}
+
 /**
  * =Question 1=
  * In this programming problem and the next you'll code up the clustering algorithm from lecture for computing a
@@ -26,12 +30,16 @@ import scala.io.Source
 object MaxSpacingKClustering extends App {
   private val lines = Source.fromInputStream(getClass.getResourceAsStream("clustering1.txt")).getLines()
   private val N = lines.next().toInt
-  private val points = mutable.Set.empty[D]
+  private val distances = mutable.Set.empty[D]
+  private val points = mutable.Set.empty[Point]
   lines.foreach { line =>
     val Array(p, q, d) = line split " " map (_.toInt)
-    points += D(p, q, d)
+    distances += D(p, q, d)
+    points += (p, q)
   }
   // number of distances from one point to another without reverse
   private val numDistances = (N - 1) * N / 2
-  assert(points.size == numDistances, s"Expected num distances is $numDistances, but was ${points.size}")
+  assert(distances.size == numDistances, s"Expected num distances is $numDistances, but was ${distances.size}")
+
+  println(new MaxSpacingKClustering(4, points.toSet, distances.toSet).maxSpacing)
 }
