@@ -30,6 +30,21 @@ package org.rorick.algoclass.part2.week2
  * alone sort the edges by cost. So you will have to be a little creative to complete this part of the question. For
  * example, is there some way you can identify the smallest distances without explicitly looking at every pair of nodes?
  */
-class BigMaxSpacingKClustering {
+object BigMaxSpacingKClustering extends App {
+  val lines = io.Source.fromInputStream(getClass.getResourceAsStream("clustering_big.txt")).getLines()
+  val Array(n, numBits) = lines next() split " " map (_.toInt)
+  lines foreach { line =>
+    // Note: point value is not unique
+    // so we need to track each point with number.. Or not? Because distance is determined by value, hence value is a
+    // kind of coordinates so equal points have the same coordinates and all distances to all other points will be the
+    // same. But it affects number of clusters. Still, forums offer to use sets to ignore
+  }
 
+  // take point
+  // generate points differing in l bits
+  // remove points not in set
+  // generate only lexicographically larger to avoid reverse edges
+  // somehow need to track processed edges (queue?)
+
+  Integer.
 }
