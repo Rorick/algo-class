@@ -1,5 +1,7 @@
 package org.rorick.algoclass.part2.week2
 
+import scala.collection.mutable
+
 /**
  * =Question 2=
  *
@@ -33,7 +35,9 @@ package org.rorick.algoclass.part2.week2
 object BigMaxSpacingKClustering extends App {
   val lines = io.Source.fromInputStream(getClass.getResourceAsStream("clustering_big.txt")).getLines()
   val Array(n, numBits) = lines next() split " " map (_.toInt)
+  val points = mutable.Set[Point]
   lines foreach { line =>
+    points += Integer parseInt (line replace (" ", ""), 2)
     // Note: point value is not unique
     // so we need to track each point with number.. Or not? Because distance is determined by value, hence value is a
     // kind of coordinates so equal points have the same coordinates and all distances to all other points will be the
@@ -46,5 +50,5 @@ object BigMaxSpacingKClustering extends App {
   // generate only lexicographically larger to avoid reverse edges
   // somehow need to track processed edges (queue?)
 
-  Integer.
+//  Integer.
 }
